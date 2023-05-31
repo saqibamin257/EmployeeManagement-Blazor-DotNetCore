@@ -16,7 +16,7 @@ namespace EmployeeManagement.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees() 
+        public async Task<ActionResult> GetEmployees() 
         {
             try
             {
@@ -71,6 +71,48 @@ namespace EmployeeManagement.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error creating new employee record");
             }
         }
+        
+        [HttpPut("{Id:int}")]
+        public async Task<ActionResult<Employee>> UpdateEmployee(int Id,Employee employee) 
+        {
+            try
+            {
+                if (Id != employee.EmployeeId)
+                {
+                    return BadRequest("Employee Id mismatch");
+                }
+                var emp = await employeeRepository.GetEmployeeById(Id);
 
+                if (emp == null)
+                {
+                    return NotFound($"Employee with Id {Id} not found.");
+                }
+                return await employeeRepository.UpdateEmployee(employee);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error updating data.");
+            }            
+        }
+        
+        [HttpDelete("{Id:int}")]
+        public async Task<ActionResult<Employee>> DeleteEmployee(int Id) 
+        {
+            try
+            {
+                var employeeToDelete = await employeeRepository.GetEmployeeById(Id);
+                if(employeeToDelete == null) 
+                {
+                    return NotFound($"Employee with Id {Id} not found.");
+                }
+                return await employeeRepository.DeleteEmployee(Id);
+            }
+            catch (Exception)
+            {
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error deleting data");
+            }
+        }
     }
 }
