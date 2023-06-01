@@ -1,3 +1,4 @@
+using EmployeeManagement.Web.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -7,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
+builder.Services.AddHttpClient<IEmployeeService, EmployeeService>(client =>
+{
+    client.BaseAddress = new Uri("https://localhost:7126/");
+});
 
 var app = builder.Build();
 

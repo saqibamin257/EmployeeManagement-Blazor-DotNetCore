@@ -11,7 +11,7 @@ namespace EmployeeManagement.Models
     {
         public int EmployeeId { get; set; }
         [Required]
-        [StringLength(100,MinimumLength =2)]
+        [StringLength(100,MinimumLength=2)]
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
@@ -21,6 +21,7 @@ namespace EmployeeManagement.Models
         public Gender Gender { get; set; }
         public int DepartmentId { get; set; }
         public string PhotoPath { get; set; }
+        public Department Department { get; set; } //navigation property
 
     }
 }
