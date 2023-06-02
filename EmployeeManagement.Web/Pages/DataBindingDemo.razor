@@ -1,0 +1,15 @@
+﻿@page "/databindingdemo/"
+@inherits DataBindingDemoBase;
+
+
+<h3>DataBindingDemo</h3>
+
+<b>Name with salutation:@(Gender=="Male"? $"Mr. {Name}": $"Miss. {Name}")</b>
+<p>Please remove text from textboxes to see the placeholder and find what wach text box is doing.</p>
+<div>Name:<input placeholder="simple text box" value="@Name"/></div>
+<div>Name:<input placeholder="change text on focus loose" value="@Name"  @onchange="@(e=>{Name=e.Value.ToString();})"/></div>
+<div>Name:<input placeholder="change text on focus loose" @bind="Name" /></div>
+<div>Name:<input placeholder="change text while typing" @bind="Name" @bind:event="oninput" /></div>
+<br>
+<textarea @bind="TextInput" @bind:event="oninput" />
+<div>Counter :@TextInput.Length </div>
